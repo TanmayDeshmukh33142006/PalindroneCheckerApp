@@ -18,34 +18,27 @@
  * @Author : Tanmay
  * @Version : 5.0
  */
+import java.util.Deque;
 import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Stack;
 public class PalindroneCheckerApp {
 
     public static void main(String[] args) {
-
         // Hardcoded string to check
-        String word = "level";
+        String word = "rotor";
 
-        // Create a queue and a stack
-        Queue<Character> queue = new LinkedList<>();
-        Stack<Character> stack = new Stack<>();
-
-        // Enqueue and push each character
+        // Create a deque and insert characters
+        Deque<Character> deque = new LinkedList<>();
         for (int i = 0; i < word.length(); i++) {
-            char ch = word.charAt(i);
-            queue.add(ch);   // enqueue
-            stack.push(ch);  // push
+            deque.addLast(word.charAt(i)); // insert at rear
         }
 
-        // Compare dequeue vs pop
+        // Compare front and rear until empty or mismatch
         boolean isPalindrome = true;
-        while (!queue.isEmpty() && !stack.isEmpty()) {
-            char fromQueue = queue.remove(); // dequeue
-            char fromStack = stack.pop();    // pop
+        while (deque.size() > 1) {
+            char front = deque.removeFirst();
+            char rear = deque.removeLast();
 
-            if (fromQueue != fromStack) {
+            if (front != rear) {
                 isPalindrome = false;
                 break;
             }

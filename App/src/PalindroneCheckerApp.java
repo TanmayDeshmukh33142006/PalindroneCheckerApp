@@ -1,9 +1,9 @@
 /**
  * ===========================================
- * MAIN CLASS - UseCase3PalindromeApp
+ * MAIN CLASS - UseCase5PalindromeApp
  * ===========================================
  *
- * Use Case 3: Palindrome Check Using String Reverse
+ * Use Case 5: Stack-Based Palindrome Checker
  *
  * Description:
  * This class is the entry point of the
@@ -16,35 +16,32 @@
  * 4. Prints the result
  *
  * @Author : Tanmay
- * @Version : 3.0
+ * @Version : 5.0
  */
-
+import java.util.Stack;
 public class PalindroneCheckerApp {
 
     public static void main(String[] args) {
 
-        // Hardcoded string to check
-        String word = "radar";
+        /// Hardcoded string to check
+        String word = "noon";
 
-        // Convert string to character array
-        char[] chars = word.toCharArray();
+        // Create a stack of characters
+        Stack<Character> stack = new Stack<>();
 
-        // Two-pointer approach
-        int left = 0;
-        int right = chars.length - 1;
-        boolean isPalindrome = true;
-
-        while (left < right) {
-            if (chars[left] != chars[right]) {
-                isPalindrome = false;
-                break;
-            }
-            left++;
-            right--;
+        // Push each character into the stack
+        for (int i = 0; i < word.length(); i++) {
+            stack.push(word.charAt(i));
         }
 
-        // Display result
-        if (isPalindrome) {
+        // Pop characters to build reversed string
+        String reversed = "";
+        while (!stack.isEmpty()) {
+            reversed = reversed + stack.pop();
+        }
+
+        // Compare original and reversed
+        if (word.equals(reversed)) {
             System.out.println(word + " is a palindrome.");
         } else {
             System.out.println(word + " is not a palindrome.");

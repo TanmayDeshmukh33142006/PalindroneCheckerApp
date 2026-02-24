@@ -21,29 +21,40 @@
 import java.util.Deque;
 import java.util.LinkedList;
 public class PalindroneCheckerApp {
+    // Method to normalize string (remove spaces and lowercase)
+    public static String normalize(String str) {
+        // Remove all spaces using regex and convert to lowercase
+        return str.replaceAll("\\s+", "").toLowerCase();
+    }
 
-    // Recursive method to check palindrome
-    public static boolean isPalindrome(String str, int left, int right) {
-        // Base condition: if pointers cross or meet
-        if (left >= right) {
-            return true;
+    // Method to check palindrome
+    public static boolean isPalindrome(String str) {
+        int left = 0;
+        int right = str.length() - 1;
+
+        while (left < right) {
+            if (str.charAt(left) != str.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
         }
-        // If mismatch found
-        if (str.charAt(left) != str.charAt(right)) {
-            return false;
-        }
-        // Recursive call moving inward
-        return isPalindrome(str, left + 1, right - 1);
+        return true;
     }
 
     // Main method
     public static void main(String[] args) {
-        String word = "madam"; // Hardcoded string
+        // Hardcoded string with spaces and mixed case
+        String word = "A man a plan a canal Panama";
 
-        if (isPalindrome(word, 0, word.length() - 1)) {
-            System.out.println(word + " is a palindrome.");
+        // Normalize string
+        String normalized = normalize(word);
+
+        // Check palindrome
+        if (isPalindrome(normalized)) {
+            System.out.println("\"" + word + "\" is a palindrome (ignoring case and spaces).");
         } else {
-            System.out.println(word + " is not a palindrome.");
+            System.out.println("\"" + word + "\" is not a palindrome.");
         }
     }
 }

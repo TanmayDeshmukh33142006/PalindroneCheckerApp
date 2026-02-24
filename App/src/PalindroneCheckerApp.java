@@ -18,39 +18,75 @@
  * @Author : Tanmay
  * @Version : 5.0
  */
+import java.util.Stack;
 import java.util.Deque;
 import java.util.LinkedList;
-public class PalindroneCheckerApp {
-    // Service class encapsulating palindrome logic
-    static class PalindromeChecker {
-        // Method to check palindrome using two-pointer technique
-        public boolean checkPalindrome(String str) {
-            int left = 0;
-            int right = str.length() - 1;
 
-            while (left < right) {
-                if (str.charAt(left) != str.charAt(right)) {
-                    return false;
-                }
-                left++;
-                right--;
-            }
-            return true;
+// Strategy interface
+interface PalindromeStrategy {
+    boolean checkPalindrome(String str);
+}
+
+// Stack-based strategy
+class StackStrategy implements PalindromeStrategy {
+    @Override
+    public boolean checkPalindrome(String str) {
+        Stack<Character> stack = new Stack<>();
+        for (char c : str.toCharArray()) {
+            stack.push(c);
         }
+        String reversed = "";
+        while (!stack.isEmpty()) {
+            reversed += stack.pop();
+        }
+        return str.equals(reversed);
+    }
+}
+
+// Deque-based strategy
+class DequeStrategy implements PalindromeStrategy {
+    @Override
+    public boolean checkPalindrome(String str) {
+        Deque<Character> deque = new LinkedList<>();
+        for (char c : str.toCharArray()) {
+            deque.addLast(c);
+        }
+        while (deque.size() > 1) {
+            if (deque.removeFirst() != deque.removeLast()) {
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+// Context class
+class PalindromeChecker {
+    private PalindromeStrategy strategy;
+
+    // Inject strategy at runtime
+    public PalindromeChecker(PalindromeStrategy strategy) {
+        this.strategy = strategy;
     }
 
-    // Main method
+    public boolean isPalindrome(String str) {
+        return strategy.checkPalindrome(str);
+    }
+}
+
+// Main application
+public class PalindroneCheckerApp {
     public static void main(String[] args) {
-        String word = "civic"; // Hardcoded string
+        String word = "level"; // Hardcoded string
 
-        // Create service object
-        PalindromeChecker checker = new PalindromeChecker();
+        // Use Stack strategy
+        PalindromeChecker stackChecker = new PalindromeChecker(new StackStrategy());
+        System.out.println("Using StackStrategy: " +
+                (stackChecker.isPalindrome(word) ? word + " is a palindrome." : word + " is not a palindrome."));
 
-        // Use encapsulated method
-        if (checker.checkPalindrome(word)) {
-            System.out.println(word + " is a palindrome.");
-        } else {
-            System.out.println(word + " is not a palindrome.");
-        }
+        // Use Deque strategy
+        PalindromeChecker dequeChecker = new PalindromeChecker(new DequeStrategy());
+        System.out.println("Using DequeStrategy: " +
+                (dequeChecker.isPalindrome(word) ? word + " is a palindrome." : word + " is not a palindrome."));
     }
 }

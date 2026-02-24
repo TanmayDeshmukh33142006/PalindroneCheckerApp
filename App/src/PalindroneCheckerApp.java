@@ -21,40 +21,36 @@
 import java.util.Deque;
 import java.util.LinkedList;
 public class PalindroneCheckerApp {
-    // Method to normalize string (remove spaces and lowercase)
-    public static String normalize(String str) {
-        // Remove all spaces using regex and convert to lowercase
-        return str.replaceAll("\\s+", "").toLowerCase();
-    }
+    // Service class encapsulating palindrome logic
+    static class PalindromeChecker {
+        // Method to check palindrome using two-pointer technique
+        public boolean checkPalindrome(String str) {
+            int left = 0;
+            int right = str.length() - 1;
 
-    // Method to check palindrome
-    public static boolean isPalindrome(String str) {
-        int left = 0;
-        int right = str.length() - 1;
-
-        while (left < right) {
-            if (str.charAt(left) != str.charAt(right)) {
-                return false;
+            while (left < right) {
+                if (str.charAt(left) != str.charAt(right)) {
+                    return false;
+                }
+                left++;
+                right--;
             }
-            left++;
-            right--;
+            return true;
         }
-        return true;
     }
 
     // Main method
     public static void main(String[] args) {
-        // Hardcoded string with spaces and mixed case
-        String word = "A man a plan a canal Panama";
+        String word = "civic"; // Hardcoded string
 
-        // Normalize string
-        String normalized = normalize(word);
+        // Create service object
+        PalindromeChecker checker = new PalindromeChecker();
 
-        // Check palindrome
-        if (isPalindrome(normalized)) {
-            System.out.println("\"" + word + "\" is a palindrome (ignoring case and spaces).");
+        // Use encapsulated method
+        if (checker.checkPalindrome(word)) {
+            System.out.println(word + " is a palindrome.");
         } else {
-            System.out.println("\"" + word + "\" is not a palindrome.");
+            System.out.println(word + " is not a palindrome.");
         }
     }
 }

@@ -23,34 +23,31 @@ public class PalindroneCheckerApp {
 
     public static void main(String[] args) {
 
-        // Welcome Message
-        System.out.println("=====================================");
-        System.out.println(" Palindrome Checker App - UC3 ");
-        System.out.println(" Version : 3.0 ");
-        System.out.println("=====================================");
+        // Hardcoded string to check
+        String word = "radar";
 
-        // Hardcoded String
-        String input = "level";
+        // Convert string to character array
+        char[] chars = word.toCharArray();
 
-        // Variable to store reversed string
-        String reversed = "";
+        // Two-pointer approach
+        int left = 0;
+        int right = chars.length - 1;
+        boolean isPalindrome = true;
 
-        // Reverse string using loop (as per hint)
-        for (int i = input.length() - 1; i >= 0; i--) {
-            reversed = reversed + input.charAt(i);   // String Concatenation
+        while (left < right) {
+            if (chars[left] != chars[right]) {
+                isPalindrome = false;
+                break;
+            }
+            left++;
+            right--;
         }
 
-        // Display reversed string
-        System.out.println("Original String : " + input);
-        System.out.println("Reversed String : " + reversed);
-
-        // Compare original and reversed using equals()
-        if (input.equals(reversed)) {
-            System.out.println("Result : The given string is a Palindrome.");
+        // Display result
+        if (isPalindrome) {
+            System.out.println(word + " is a palindrome.");
         } else {
-            System.out.println("Result : The given string is NOT a Palindrome.");
+            System.out.println(word + " is not a palindrome.");
         }
-
-        System.out.println("Application Execution Completed.");
     }
 }
